@@ -1,0 +1,60 @@
+package Pak2;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+
+
+
+
+import javax.swing.GroupLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import Pak2.MainWin;
+
+
+
+public class Pak102 {
+	public static void main(String[] args){
+		MainWin mainwin = new MainWin();
+		mainwin.setVisible(true);
+		mainwin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	   
+	}
+       	
+}
+
+class MainWin extends JFrame{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JTextField Zadaniyatxt;
+	private JTextField Vremyaviplneniyatxt;
+	private JTextField Raspisaniyetxt;
+	private JTextField mailtxt;
+	public MainWin(){
+		setSize(640,480);
+		setTitle("Расписание");
+		setTitle("Невыполненые задания");
+		setTitle("Выполненые Задания  ");
+		Zadaniyatxt= new JTextField();
+		Raspisaniyetxt= new JTextField();
+		JLabel = new JLabel("")  		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}

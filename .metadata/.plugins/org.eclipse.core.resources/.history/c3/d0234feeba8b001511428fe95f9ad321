@@ -1,0 +1,21 @@
+package javax.swing;
+
+public @interface JFrameForm {
+	
+      public JFrameForm;
+      public static void main ((String[]args));
+      int WIDTH = 300;
+		 int HEIGHT =200;
+		 String TITLE ="Autor by IO-26 Company";
+		 JFrameForm frame =new JFrameForm();
+		  frame.setVisible(true);
+		  frame.setSize(WIDTH,HEIGHT);
+		  frame.setTitle(TITLE);
+	
+
+
+	JFrame frame =new JFrame();
+			  frame.setVisible(true);
+			  frame.setSize(WIDTH,HEIGHT);
+			  frame.setTitle(TITLE);}
+}

@@ -1,0 +1,222 @@
+package Pak3;
+import java.awt.Container;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+ 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.UIManager;
+ 
+public class Pak103
+{
+	
+	public static void main(String[] args)
+	{	
+		
+		
+		KOFrame frame = new KOFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.show();	
+		
+	}		
+}
+ 
+ 
+class KOFrame extends JFrame
+{
+	public KOFrame()
+	{
+		Toolkit kit = Toolkit.getDefaultToolkit();
+		Dimension ss = kit.getScreenSize();
+		int scrW = ss.width;
+		int scrH = ss.height;
+		
+		int fW = 300;
+		int fH = 350;
+		
+		JFrame frame = new JFrame();
+		
+		setSize(fW,fH);
+		setLocation((scrW-fW)/2, (scrH-fH)/2);
+		setTitle("Крестики-нолики v2.0");
+		setCursor(Cursor.HAND_CURSOR);
+		
+		KOPanel panel = new KOPanel();
+		panel.setSize(300,300);
+		Container contain = getContentPane();
+		contain.add(panel);
+		
+		ExitPanel exit_panel = new ExitPanel();
+		contain.add(exit_panel);
+		exit_panel.setSize(50,150);
+		
+	}
+}	
+ 
+ 
+class ExitPanel extends JPanel
+{
+	ExitPanel()
+	{
+		setLayout(new GridLayout(1,2));
+		JButton exit_but = new JButton();
+		JButton res_but = new JButton();
+		add(exit_but);
+		add(res_but);
+	}
+}
+class KOPanel extends JPanel
+{
+	
+	char[][] game_arr = new char[3][3];
+	public int cout=0;
+	
+	ImageIcon krest = new ImageIcon("res/images/x_image.jpg");	
+    ImageIcon nol = new ImageIcon("res/images/o_image.jpg");
+	
+    public KOPanel()
+	{
+	
+		setLayout(new GridLayout(3,3));
+		KOButton[][] buttons = new KOButton[3][3];
+		
+		{
+		 for (int i = 0; i < 3; ++i) {
+		 	for (int j = 0; j < 3; ++j) {
+				buttons[i][j] = new KOButton(i,j);
+				buttons[i][j].addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent event) {
+						KOButton sourceOfAction = (KOButton) event.getSource();
+						if (cout%2==0)
+						{
+							game_arr[sourceOfAction.getRow()][sourceOfAction.getColumn()]='x';
+							sourceOfAction.setIcon(krest);
+							chek();
+							cout++;
+							
+						}
+						else
+						{
+							game_arr[sourceOfAction.getRow()][sourceOfAction.getColumn()]='o';
+							sourceOfAction.setIcon(nol);
+							chek();
+							cout++;
+						}
+					}
+				});
+			add(buttons[i][j]);
+					}
+		 	}
+		}
+	}
+public void clear()
+{
+	for (int i = 0; i < 3; ++i) {
+	 	for (int j = 0; j < 3; ++j) {
+	 		game_arr[i][j]=' ';
+	 	}
+	}
+}
+	
+ 
+ 
+ 
+public void chek()
+	{
+		String exit_option_string;
+		int exit_option = 0;
+		
+	    if ((game_arr[0][0] == 'x' && game_arr[0][1] == 'x' && game_arr[0][2] == 'x')
+	            || (game_arr[1][0] == 'x' && game_arr[1][1] == 'x' && game_arr[1][2] == 'x')
+	            || (game_arr[2][0] == 'x' && game_arr[2][1] == 'x' && game_arr[2][2] == 'x')
+	            || (game_arr[0][0] == 'x' && game_arr[1][0] == 'x' && game_arr[2][0] == 'x')
+	            || (game_arr[0][1] == 'x' && game_arr[1][1] == 'x' && game_arr[2][1] == 'x')
+	            || (game_arr[0][2] == 'x' && game_arr[1][2] == 'x' && game_arr[2][2] == 'x')
+	            || (game_arr[0][0] == 'x' && game_arr[1][1] == 'x' && game_arr[2][2] == 'x')
+	            || (game_arr[2][0] == 'x' && game_arr[1][1] == 'x' && game_arr[0][2] == 'x')) 
+	    {
+	    	JOptionPane.showMessageDialog(null, "Выиграли крестики!");
+	    	exit_option_string = JOptionPane.showInputDialog("1 - заново; 2 - выход:");
+		    exit_option = Integer.parseInt(exit_option_string);
+		    while(exit_option!=1 || exit_option!=2)
+		    {
+		    	if(exit_option==1)
+			    {
+		    		clear();
+			    	System.out.println("Пока не готово!)");
+			    	System.exit(0);
+			    }
+			    if(exit_option==2)
+			    {
+			    	System.exit(0);
+			    }
+		    	if(exit_option!=1 && exit_option!=2)
+		    	{
+		    		exit_option_string = JOptionPane.showInputDialog("Ошибка! Повторите ввод:\n1 - заново; 2 - выход:");
+		    		exit_option = Integer.parseInt(exit_option_string);
+		    	}
+		    }   
+		    
+	    }
+	    if ((game_arr[0][0] == 'o' && game_arr[0][1] == 'o' && game_arr[0][2] == 'o')
+	            || (game_arr[1][0] == 'o' && game_arr[1][1] == 'o' && game_arr[1][2] == 'o')
+	            || (game_arr[2][0] == 'o' && game_arr[2][1] == 'o' && game_arr[2][2] == 'o')
+	            || (game_arr[0][0] == 'o' && game_arr[1][0] == 'o' && game_arr[2][0] == 'o')
+	            || (game_arr[0][1] == 'o' && game_arr[1][1] == 'o' && game_arr[2][1] == 'o')
+	            || (game_arr[0][2] == 'o' && game_arr[1][2] == 'o' && game_arr[2][2] == 'o')
+	            || (game_arr[0][0] == 'o' && game_arr[1][1] == 'o' && game_arr[2][2] == 'o')
+	            || (game_arr[2][0] == 'o' && game_arr[1][1] == 'o' && game_arr[0][2] == 'o'))
+	    {
+	    	JOptionPane.showMessageDialog(null, "Выиграли нолики!");
+	    	exit_option_string = JOptionPane.showInputDialog("1 - заново; 2 - выход:");
+		    exit_option = Integer.parseInt(exit_option_string);
+		    while(exit_option!=1 || exit_option!=2)
+		    {
+		    	if(exit_option==1)
+			    {	
+		    		clear();
+			    	System.out.println("Пока не готово!)");
+			    	System.exit(0);
+			    }
+			    if(exit_option==2)
+			    {
+			    	System.exit(0);
+			    }
+		    	if(exit_option!=1 && exit_option!=2)
+		    	{
+		    		exit_option_string = JOptionPane.showInputDialog("Ошибка! Повторите ввод:\n1 - заново; 2 - выход:");
+		    		exit_option = Integer.parseInt(exit_option_string);
+		    	}
+		    }
+	    }
+	}
+ 
+ 
+ 
+public class KOButton extends JButton
+{
+	public KOButton(int r, int c)
+	{
+		super();
+		row=r;
+		column=c;
+	}
+	public int getRow()
+	{
+		return row;
+	}
+	public int getColumn()
+	{
+		return column;
+	}
+	private int row,column;
+	}
+}

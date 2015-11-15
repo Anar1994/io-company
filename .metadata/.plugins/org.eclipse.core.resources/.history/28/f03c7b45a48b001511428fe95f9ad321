@@ -1,0 +1,358 @@
+package Pak3;
+
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+ 
+import javax.swing.DefaultCellEditor;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+ 
+public class Pak103 extends JFrame {
+	
+	public DefaultTableModel myModel;
+	private JPanel contentPane, p1;
+	private JPanel panel;
+	private JTextArea textArea;
+	private JTable table;
+	private JButton[] btn;
+	int schet = 0;
+	private int z = 1;
+	private Object[][] mod = new Object[z][6];
+	int b = 0, n;
+	BufferedReader fin;
+	int c, v, x, i,e;
+	String main, ad;
+	String predlog[], word[], col[], str, prov;
+	String[][] da;
+ 
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Pak103 frame = new Pak103();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+ 
+	private static void refreshUI(JComponent c, boolean includeParent) {
+		if (includeParent)
+			c.updateUI();
+ 
+		for (int i = 0; i < c.getComponentCount(); i++) {
+			Component child = c.getComponent(i);
+			if (child instanceof JComponent) {
+				refreshUI((JComponent) child, true);
+			}
+		}
+	}
+ 
+	public Pak103() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 800, 600);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+ 
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBounds(0, 25, 800, 550);
+		contentPane.add(tabbedPane);
+		p1 = new JPanel();
+		tabbedPane.addTab("Отбор слов", p1);
+		p1.setLayout(null);
+ 
+		textArea = new JTextArea("");
+		textArea.setLineWrap(true);
+		textArea.setWrapStyleWord(true);
+		JScrollPane scrollPane = new JScrollPane(textArea);
+		scrollPane.setBounds(25, 25, 550, 150);
+		p1.add(scrollPane);
+ 
+		myModel = new DefaultTableModel(
+				mod,
+				new String[] {
+						"\u0421\u043B\u043E\u0432\u043E",
+						"\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0441\u043B\u043E\u0432\u0430",
+						"\u0424\u043E\u0440\u043C\u0430",
+						"\u0427\u0430\u0441\u0442\u044C \u0440\u0435\u0447\u0438",
+						"\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0432 \u0431\u0430\u0437\u0443",
+						"Удалить"});
+		table = new JTable(myModel);
+		JScrollPane scrollPane1 = new JScrollPane(table);
+		table.setValueAt("Основная", 0, 2);
+		table.setValueAt("Существительное", 0, 3);
+		table.getColumn("\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0432 \u0431\u0430\u0437\u0443").setCellRenderer(new ButtonRenderer());
+	    table.getColumn("\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0432 \u0431\u0430\u0437\u0443").setCellEditor(new ButtonEditor(new JCheckBox()));
+	    table.getColumn("Удалить").setCellRenderer(new ButtonRenderer1());
+	    table.getColumn("Удалить").setCellEditor(new ButtonEditor1(new JCheckBox()));
+		scrollPane1.setBounds(25, 223, 685, 252);
+		p1.add(scrollPane1);
+		/*
+		 * JButton bn = new JButton();
+		 * table.getColumnModel().getColumn(2).setCellEditor(bn);
+		 */
+		JButton btnNewButton = new JButton(
+				"\u041E\u0431\u0440\u0430\u0431\u043E\u0442\u0430\u0442\u044C \u0442\u0435\u043A\u0441\u0442");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				// получаю текст
+				main = textArea.getText();
+				// делю его на предложения
+				// main=main.replace("([\\W\\.\\s](\\.|\\?|\\!))\\s+([A-ZА-Я])",
+				// "$1\n$3");
+				// predlog = main.split("\n");
+				predlog = main.split("\\s+");
+				// разбираю предложения на слова
+				for (e=0; e < predlog.length; e++) {
+					btn = new JButton[e];
+					if (!predlog[e].isEmpty()) {
+						schet++;
+						// items2[schet]=predlog[e];
+						table.setValueAt(predlog[0], 0, 0);
+						table.setValueAt(/* table.getValueAt(0,1) */1, 0, 1);
+						// table.setValueAt("Основная", e, 2);
+						// table.setValueAt("Существительное", e, 3);
+						// table.updateUI();
+						if (e > 0) {
+							myModel.addRow(new Object[] { predlog[e], 1,
+									"Основная", "Существительное" });
+							table.getColumn("\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0432 \u0431\u0430\u0437\u0443").setCellRenderer(new ButtonRenderer());
+						    table.getColumn("\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0432 \u0431\u0430\u0437\u0443").setCellEditor(new ButtonEditor(new JCheckBox()));
+						    table.getColumn("Удалить").setCellRenderer(new ButtonRenderer1());
+						    table.getColumn("Удалить").setCellEditor(new ButtonEditor1(new JCheckBox()));
+						}
+					}
+				}
+			}
+		});
+		btnNewButton.setBounds(585, 58, 136, 41);
+ 
+		p1.add(btnNewButton);
+		JButton btnNewButton_1 = new JButton(
+				"\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0444\u0430\u0439\u043B");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FileNameExtensionFilter filter = new FileNameExtensionFilter(
+						"TXT files", "txt");
+				JFileChooser chooser = new JFileChooser();
+				try {
+					UIManager.setLookAndFeel(UIManager
+							.getSystemLookAndFeelClassName());
+				} catch (ClassNotFoundException | InstantiationException
+						| IllegalAccessException
+						| UnsupportedLookAndFeelException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+				chooser.updateUI(); // Create UI objects
+				chooser.setFileFilter(filter);
+				refreshUI(chooser, false);
+				int ret = chooser.showDialog(null, "Открыть файл");
+ 
+				File f = chooser.getSelectedFile();
+				try {
+					fin = new BufferedReader(new FileReader(f));
+				} catch (IOException e1) {
+				}
+				String line;
+				try {
+					if ((line = fin.readLine()) != null) {
+						textArea.append(line);
+					} else {
+					}
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnNewButton_1.setBounds(585, 110, 136, 41);
+		p1.add(btnNewButton_1);
+ 
+		String[] items = { "Основная", "Изменённая" };
+		JComboBox fcEditor = new JComboBox(items);
+		table.getColumnModel().getColumn(2)
+				.setCellEditor(new DefaultCellEditor(fcEditor));
+		String[] items1 = { "Существительное", "Глагол", "Прилагательное",
+				"Наречие", "Местоимение", "Причастие", "Деепричастие",
+				"Служебная ч.р." };
+		JComboBox fcEditor1 = new JComboBox(items1);
+		fcEditor1.setVisible(true);
+		table.getColumnModel().getColumn(3)
+				.setCellEditor(new DefaultCellEditor(fcEditor1));
+	}
+	class ButtonRenderer extends JButton implements TableCellRenderer {
+ 
+		public ButtonRenderer() {
+			setOpaque(true);
+		}
+ 
+		public Component getTableCellRendererComponent(JTable table, Object value,
+				boolean isSelected, boolean hasFocus, int row, int column) {
+			if (isSelected) {
+				setForeground(table.getSelectionForeground());
+				setBackground(table.getSelectionBackground());
+			} else {
+				setForeground(table.getForeground());
+				setBackground(UIManager.getColor("Button.background"));
+			}
+			setText((value == null) ? "Добавить" : value.toString());
+			return this;
+		}
+	}
+ 
+	class ButtonEditor extends DefaultCellEditor {
+		protected JButton button;
+ 
+		private String label;
+ 
+		private boolean isPushed;
+ 
+		public ButtonEditor(JCheckBox checkBox) {
+			super(checkBox);
+			button = new JButton();
+			button.setOpaque(true);
+			button.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					fireEditingStopped();
+				}
+			});
+		}
+ 
+		public Component getTableCellEditorComponent(JTable table, Object value,
+				boolean isSelected, int row, int column) {
+			if (isSelected) {
+				button.setForeground(table.getSelectionForeground());
+				button.setBackground(table.getSelectionBackground());
+			} else {
+				button.setForeground(table.getForeground());
+				button.setBackground(table.getBackground());
+			}
+			label = (value == null) ? "" : value.toString();
+			button.setText(label);
+			isPushed = true;
+			return button;
+		}
+ 
+		public Object getCellEditorValue() {
+			if (isPushed) {
+				//
+				//
+				JOptionPane.showMessageDialog(button, label + ": Ouch!");
+				// System.out.println(label + ": Ouch!");
+			}
+			isPushed = false;
+			return new String(label);
+		}
+ 
+		public boolean stopCellEditing() {
+			isPushed = false;
+			return super.stopCellEditing();
+		}
+ 
+		protected void fireEditingStopped() {
+			super.fireEditingStopped();
+		}
+	}
+ 
+ 
+	class ButtonRenderer1 extends JButton implements TableCellRenderer {
+ 
+		public ButtonRenderer1() {
+			setOpaque(true);
+		}
+ 
+		public Component getTableCellRendererComponent(JTable table, Object value,
+				boolean isSelected, boolean hasFocus, int row, int column) {
+			if (isSelected) {
+				setForeground(table.getSelectionForeground());
+				setBackground(table.getSelectionBackground());
+			} else {
+				setForeground(table.getForeground());
+				setBackground(UIManager.getColor("Button.background"));
+			}
+			setText((value == null) ? "Удалить" : value.toString());
+			return this;
+		}
+	}
+ 
+	class ButtonEditor1 extends DefaultCellEditor {
+		protected JButton button;
+ 
+		private String label;
+ 
+		private boolean isPushed;
+ 
+		public ButtonEditor1(JCheckBox checkBox) {
+			super(checkBox);
+			button = new JButton();
+			button.setOpaque(true);
+			button.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					fireEditingStopped();
+				}
+			});
+		}
+ 
+		public Component getTableCellEditorComponent(JTable table, Object value,
+				boolean isSelected, int row, int column) {
+			if (isSelected) {
+				button.setForeground(table.getSelectionForeground());
+				button.setBackground(table.getSelectionBackground());
+			} else {
+				button.setForeground(table.getForeground());
+				button.setBackground(table.getBackground());
+			}
+			label = (value == null) ? "Удалить" : value.toString();
+			button.setText(label);
+			isPushed = true;
+			return button;
+		}
+ 
+		public Object getCellEditorValue() {
+			if (isPushed) {
+			}
+			isPushed = false;
+			return new String(label);
+		}
+ 
+		public boolean stopCellEditing() {
+			isPushed = false;
+			return super.stopCellEditing();
+		}
+ 
+		protected void fireEditingStopped() {
+			//super.fireEditingStopped();
+			
+		}
+	}
+ 
+}

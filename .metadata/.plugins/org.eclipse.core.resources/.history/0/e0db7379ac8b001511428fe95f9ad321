@@ -1,0 +1,64 @@
+package Pak2;
+
+
+import javax.swing.*;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+
+public class pak102 {
+	public  JFrame jframe;
+	 public static void main(String[]args){
+		 int WIDTH = 1200;
+		 int HEIGHT =800;
+		 String TITLE ="Autor by IO-26 Company";
+		 JButton myButton = new JButton("Настройки");
+		 
+		 JFrame frame =new JFrame();
+		  frame.setVisible(true);
+		  frame.setSize(WIDTH,HEIGHT);
+		  frame.setTitle(TITLE);
+		  class MainWindow extends JFrame implements ActionListener {
+			    /**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+				private final JButton simpleButton;
+			    private final JTextField simpleField;
+			 
+			    public MainWindow() {
+			        // При закрытии окна завершить приложение
+			        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			        // Устанавливаем размер
+			        this.setSize(500, 500);
+			        // Устанавливаем менеджер компоновки FlowLayout
+			        this.setLayout(new FlowLayout());
+			 
+			        // Создаем текстовое поле
+			        simpleField = new JTextField(20);
+			        // Создаем кнопку с текстом Click me!
+			        simpleButton = new JButton("Click me!");
+			        // Связываем её с обработчиком события actionPerformed этого класса
+			        simpleButton.addActionListener(this);
+			        // Добавляем поле и кнопку на форму
+			        this.add(simpleField);
+			        this.add(simpleButton);
+			        // Отображаем форму
+			        this.setVisible(true);
+			    }
+			 
+			    @Override
+			    public void actionPerformed(ActionEvent e) {
+			        simpleField.setText("Тест успешен!");
+			    }
+			}
+		  
+		 }
+	 
+	 
+	 
+	 
+	 
+}
