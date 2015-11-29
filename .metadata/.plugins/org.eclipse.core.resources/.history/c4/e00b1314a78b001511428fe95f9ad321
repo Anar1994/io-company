@@ -1,0 +1,41 @@
+package Pak2;
+
+
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+
+
+
+
+
+public class pak102 {
+	public  JFrame jframe;
+	 public static void main(String[]args){
+		 int WIDTH = 1200;
+		 int HEIGHT =800;
+		 String TITLE ="Autor by IO-26 Company";
+		 JButton myButton = new JButton("Настройки");
+		
+		 
+		 JFrame frame =new JFrame();
+		  frame.setVisible(true);
+		  frame.setSize(WIDTH,HEIGHT);
+		  frame.setTitle(TITLE);
+		  public static void main(JButton[]args1){
+			  int WIDTH1 = 2;
+				 int HEIGHT1 =1;
+				 JButton myButton1 = new JButton("Настройки");
+				 
+		  }
+		  
+		
+		  
+		 }
+	 
+	 
+	 
+	 
+	 
+}

@@ -1,0 +1,27 @@
+package Pak2;
+
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.JPopupMenu;
+
+public class pak102 {
+	public  JFrame jframe;
+	 public static void main(JPopupMenu args){
+		 int WIDTH = 1400;
+		 int HEIGHT =800;
+		 String TITLE ="Autor by IO-26 Company";
+		 
+		 JFrame frame =new JFrame();
+		  frame.setVisible(true);
+		  frame.setSize(WIDTH,HEIGHT);
+		  frame.setTitle(TITLE);
+		  JButton myButton = new JButton("Сохранить ");
+		  myButton.setComponentPopupMenu(args);
+		  
+		 }
+	 
+	 
+	 
+	 
+	 
+}
