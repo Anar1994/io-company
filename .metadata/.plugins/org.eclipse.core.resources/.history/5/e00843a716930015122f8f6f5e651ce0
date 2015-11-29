@@ -1,0 +1,14 @@
+package lab2;
+
+import java.awt.Color;
+
+import javax.swing.JTable;
+
+public class TableStyle {
+
+	public void setBackgroud(JTable table, Color black) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

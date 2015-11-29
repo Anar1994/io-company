@@ -35,6 +35,7 @@ class MainWin extends JFrame{
 		JLabel loginlbl = new JLabel("Login:");
 		JLabel pwdlbl = new JLabel("Password:");
 		JButton submitbtn = new JButton("Submit");
+		
 		JPanel formPanel = new JPanel(new GridLayout(5,1));
 		formPanel.add(loginlbl);
 		formPanel.add(logintxt);
