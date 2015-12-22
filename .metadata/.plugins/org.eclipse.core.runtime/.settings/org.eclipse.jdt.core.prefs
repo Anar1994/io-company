@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+org.eclipse.jdt.core.classpathVariable.ECLIPSE_HOME=D\:/\u0430\u0440\u0445\u0438\u0432 3\u043A\u0443\u0440\u0441/Eclipse Standard Luna SR1 4.4.1/eclipse 32-bit/
 org.eclipse.jdt.core.codeComplete.visibilityCheck=enabled
 org.eclipse.jdt.core.compiler.codegen.inlineJsrBytecode=enabled
 org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.8
